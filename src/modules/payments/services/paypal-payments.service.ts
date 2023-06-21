@@ -51,11 +51,13 @@ export class PaypalPaymentsService {
         },
         status: PaymentStatus.PENDING,
       };
+      const totalAmount =
+        amount + 0.03 * amount + 0.03 * amount + 0.03 * amount;
       const newTransaction = await this.appRepository.payment.createOne({
         data,
       });
       const order = await this.paypalService.createOrder({
-        amount,
+        amount: totalAmount,
         transactionId: newTransaction._id,
         user,
       });
