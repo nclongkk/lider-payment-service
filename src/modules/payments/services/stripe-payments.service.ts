@@ -685,14 +685,15 @@ export class StripePaymentsService {
         },
         status: PaymentStatus.PENDING,
       };
-
+      const totalAmount =
+        amount + 0.03 * amount + 0.03 * amount + 0.03 * amount;
       const newTransaction = await this.appRepository.payment.createOne({
         data,
       });
 
       const paymentIntent = await this.createPaymentIntent({
         user,
-        amount,
+        amount: totalAmount,
         transactionId: newTransaction._id,
       });
 

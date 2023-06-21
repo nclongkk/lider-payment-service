@@ -134,7 +134,7 @@ export class StatisticService {
   }
 
   async statisticTotal(user) {
-    return this.appRepository.payment.aggregate([
+    const result = await this.appRepository.payment.aggregate([
       {
         $match: {
           userId: new mongoose.Types.ObjectId(user._id),
@@ -169,5 +169,12 @@ export class StatisticService {
         },
       },
     ]);
+
+    return [
+      {
+        'Amount In': result[0] ? result[0]['Amount In'] : 0,
+        'Amount Out': result[0] ? result[0]['Amount Out'] : 0,
+      },
+    ];
   }
 }
